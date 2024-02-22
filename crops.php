@@ -105,7 +105,7 @@ switch ($method) {
         $stmt->bindParam(':harvesting_cal', $crops->harvesting_cal);
         $stmt->bindParam(':pest', $crops->pest);
         $stmt->bindParam(':obnotes', $crops->obnotes);
-        $stmt->bindParam(':created_at', $created_at);
+        // $stmt->bindParam(':created_at', $created_at);
         $stmt->bindParam(':variety', $crops->variety);
 
         $stmt->bindParam(':user_id', $crops->user_id);
