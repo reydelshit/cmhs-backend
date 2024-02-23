@@ -13,6 +13,7 @@ switch ($method) {
         if (isset($_GET['user_id'])) {
             $user_id = $_GET['user_id'];
             $sql = "SELECT 
+              COALESCE(suitable.suitable_id, 'N/A') AS suitable_id,
             COALESCE(crops.crops_id, 'N/A') AS crops_id,
             COALESCE(schedule.status, 'N/A') AS status,
             COALESCE(suitable.suitable_month, 'N/A') AS suitable_month,
@@ -29,7 +30,7 @@ switch ($method) {
         INNER JOIN 
             field ON field.field_id = schedule.field_id 
         WHERE 
-            crops.user_id = :user_id";
+            crops.user_id = :user_id  GROUP BY suitable.suitable_id";
         }
 
 

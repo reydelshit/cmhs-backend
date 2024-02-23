@@ -44,44 +44,6 @@ switch ($method) {
         $suitable = json_decode(file_get_contents('php://input'));
 
 
-        // if ($stmt_check->rowCount() > 0) {
-
-
-        //     $sql_update = "UPDATE suitable 
-        //                 SET suitable_month = :suitable_month, 
-        //                     suitability = :suitability, 
-        //                     suitable_notes = :suitable_notes, 
-        //                     suitable_index = :suitable_index, 
-        //                     suitable_crops_id = :suitable_crops_id
-        //                 WHERE suitable_index = :suitable_index AND user_id = :user_id ";
-
-        //     $stmt2 = $conn->prepare($sql_update);
-
-        //     $stmt2->bindParam(':user_id', $suitable->user_id);
-
-        //     $stmt2->bindParam(':suitable_month', $suitable->suitable_month);
-        //     $stmt2->bindParam(':suitable_notes', $suitable->suitable_notes);
-        //     $stmt2->bindParam(':suitability', $suitable->suitability);
-        //     $stmt2->bindParam(':suitable_index', $suitable->suitable_index);
-        //     $stmt2->bindParam(':suitable_crops_id', $suitable->suitable_crops_id);
-
-        //     if ($stmt2->execute()) {
-        //         $response = [
-        //             "status" => "success",
-        //             "message" => "Suitability information successfully updated"
-        //         ];
-        //     } else {
-
-        //         $response = [
-        //             "status" => "error",
-        //             "message" => "Failed to update suitability information"
-        //         ];
-        //     }
-
-        //     echo json_encode($response);
-        //     exit;
-        // } else {
-
         $sql = "INSERT INTO suitable (suitable_id, suitable_month, suitability, suitable_notes, suitable_index, suitable_crops_id, user_id) VALUES (:suitable_id, :suitable_month, :suitability, :suitable_notes, :suitable_index, :suitable_crops_id, :user_id)";
 
         $stmt = $conn->prepare($sql);
