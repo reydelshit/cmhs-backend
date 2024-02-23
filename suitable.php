@@ -43,79 +43,73 @@ switch ($method) {
     case "POST":
         $suitable = json_decode(file_get_contents('php://input'));
 
-        $sql_check = "SELECT * FROM suitable WHERE suitable_index = :suitable_index AND user_id = :user_id";
-        $stmt_check = $conn->prepare($sql_check);
-        $stmt_check->bindParam(':suitable_index', $suitable->suitable_index);
-        $stmt_check->bindParam(':user_id', $suitable->user_id);
 
-        $stmt_check->execute();
-
-        if ($stmt_check->rowCount() > 0) {
+        // if ($stmt_check->rowCount() > 0) {
 
 
-            $sql_update = "UPDATE suitable 
-                        SET suitable_month = :suitable_month, 
-                            suitability = :suitability, 
-                            suitable_notes = :suitable_notes, 
-                            suitable_index = :suitable_index, 
-                            suitable_crops_id = :suitable_crops_id
-                        WHERE suitable_index = :suitable_index AND user_id = :user_id ";
+        //     $sql_update = "UPDATE suitable 
+        //                 SET suitable_month = :suitable_month, 
+        //                     suitability = :suitability, 
+        //                     suitable_notes = :suitable_notes, 
+        //                     suitable_index = :suitable_index, 
+        //                     suitable_crops_id = :suitable_crops_id
+        //                 WHERE suitable_index = :suitable_index AND user_id = :user_id ";
 
-            $stmt2 = $conn->prepare($sql_update);
+        //     $stmt2 = $conn->prepare($sql_update);
 
-            $stmt2->bindParam(':user_id', $suitable->user_id);
+        //     $stmt2->bindParam(':user_id', $suitable->user_id);
 
-            $stmt2->bindParam(':suitable_month', $suitable->suitable_month);
-            $stmt2->bindParam(':suitable_notes', $suitable->suitable_notes);
-            $stmt2->bindParam(':suitability', $suitable->suitability);
-            $stmt2->bindParam(':suitable_index', $suitable->suitable_index);
-            $stmt2->bindParam(':suitable_crops_id', $suitable->suitable_crops_id);
+        //     $stmt2->bindParam(':suitable_month', $suitable->suitable_month);
+        //     $stmt2->bindParam(':suitable_notes', $suitable->suitable_notes);
+        //     $stmt2->bindParam(':suitability', $suitable->suitability);
+        //     $stmt2->bindParam(':suitable_index', $suitable->suitable_index);
+        //     $stmt2->bindParam(':suitable_crops_id', $suitable->suitable_crops_id);
 
-            if ($stmt2->execute()) {
-                $response = [
-                    "status" => "success",
-                    "message" => "Suitability information successfully updated"
-                ];
-            } else {
+        //     if ($stmt2->execute()) {
+        //         $response = [
+        //             "status" => "success",
+        //             "message" => "Suitability information successfully updated"
+        //         ];
+        //     } else {
 
-                $response = [
-                    "status" => "error",
-                    "message" => "Failed to update suitability information"
-                ];
-            }
+        //         $response = [
+        //             "status" => "error",
+        //             "message" => "Failed to update suitability information"
+        //         ];
+        //     }
 
-            echo json_encode($response);
-            exit;
+        //     echo json_encode($response);
+        //     exit;
+        // } else {
+
+        $sql = "INSERT INTO suitable (suitable_id, suitable_month, suitability, suitable_notes, suitable_index, suitable_crops_id, user_id) VALUES (:suitable_id, :suitable_month, :suitability, :suitable_notes, :suitable_index, :suitable_crops_id, :user_id)";
+
+        $stmt = $conn->prepare($sql);
+        $created_at = date('Y-m-d H:i:s');
+        $stmt->bindParam(':suitable_id', $suitable->suitable_id);
+        $stmt->bindParam(':suitable_month', $suitable->suitable_month);
+        $stmt->bindParam(':suitable_notes', $suitable->suitable_notes);
+        $stmt->bindParam(':suitability', $suitable->suitability);
+        $stmt->bindParam(':suitable_index', $suitable->suitable_index);
+        $stmt->bindParam(':suitable_crops_id', $suitable->suitable_crops_id);
+        $stmt->bindParam(':user_id', $suitable->user_id);
+
+
+        if ($stmt->execute()) {
+            $response = [
+                "status" => "success",
+                "message" => "crops successfully"
+            ];
         } else {
-
-            $sql = "INSERT INTO suitable (suitable_id, suitable_month, suitability, suitable_notes, suitable_index, suitable_crops_id, user_id) VALUES (:suitable_id, :suitable_month, :suitability, :suitable_notes, :suitable_index, :suitable_crops_id, :user_id)";
-
-            $stmt = $conn->prepare($sql);
-            $created_at = date('Y-m-d H:i:s');
-            $stmt->bindParam(':suitable_id', $suitable->suitable_id);
-            $stmt->bindParam(':suitable_month', $suitable->suitable_month);
-            $stmt->bindParam(':suitable_notes', $suitable->suitable_notes);
-            $stmt->bindParam(':suitability', $suitable->suitability);
-            $stmt->bindParam(':suitable_index', $suitable->suitable_index);
-            $stmt->bindParam(':suitable_crops_id', $suitable->suitable_crops_id);
-            $stmt->bindParam(':user_id', $suitable->user_id);
-
-
-            if ($stmt->execute()) {
-                $response = [
-                    "status" => "success",
-                    "message" => "crops successfully"
-                ];
-            } else {
-                $response = [
-                    "status" => "error",
-                    "message" => "crops failed"
-                ];
-            }
-
-            echo json_encode($response);
-            break;
+            $response = [
+                "status" => "error",
+                "message" => "crops failed"
+            ];
         }
+
+        echo json_encode($response);
+        break;
+        // }
 
 
     case "PUT":
@@ -126,7 +120,7 @@ switch ($method) {
                             suitability = :suitability, 
                             suitable_notes = :suitable_notes, 
                             suitable_index = :suitable_index, 
-                            suitable_crops_id = :suitable_crops_id, 
+                            suitable_crops_id = :suitable_crops_id
                         WHERE suitable_id = :suitable_id AND user_id = :user_id ";
 
 
