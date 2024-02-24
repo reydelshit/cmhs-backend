@@ -22,9 +22,6 @@ switch ($method) {
         }
 
 
-        // if (!isset($_GET['crops_id']) && !isset($_GET['user_id'])) {
-        //     $sql = "SELECT * FROM crops ORDER BY crops_id DESC ";
-        // }
 
 
         if (isset($sql)) {
@@ -37,6 +34,8 @@ switch ($method) {
             if (isset($user_id)) {
                 $stmt->bindParam(':user_id', $user_id);
             }
+
+
 
             $stmt->execute();
             $crops = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -54,7 +53,8 @@ switch ($method) {
 
     case "POST":
         $field = json_decode(file_get_contents('php://input'));
-        $sql = "INSERT INTO field (field_id, field_name, field_size, location, soil_type, irrigation_system, crop_history, created_at, user_id) VALUES (:field_id, :field_name, :field_size, :soil_type, :location, :irrigation_system, :crop_history, :created_at, :user_id)";
+        $sql = "INSERT INTO field (field_id, field_name, field_size, location, soil_type, irrigation_system, crop_history, created_at, user_id) 
+                VALUES (:field_id, :field_name, :field_size, :location, :soil_type, :irrigation_system, :crop_history, :created_at, :user_id)";
 
         $stmt = $conn->prepare($sql);
         $created_at = date('Y-m-d H:i:s');
