@@ -54,7 +54,7 @@ switch ($method) {
 
     case "POST":
         $crops = json_decode(file_get_contents('php://input'));
-        $sql = "INSERT INTO crops (crops_id, crops_img, crops_name, planting_method, expected_yield, harvesting_cal, pest, obnotes, created_at, variety, user_id) VALUES (:crops_id, :crops_img, :crops_name, :planting_method, :expected_yield,:harvesting_cal, :pest, :obnotes, :created_at, :variety, :user_id)";
+        $sql = "INSERT INTO crops (crops_id, crops_img, crops_name, planting_method, harvesting_cal, pest, obnotes, created_at, variety, user_id) VALUES (:crops_id, :crops_img, :crops_name, :planting_method,:harvesting_cal, :pest, :obnotes, :created_at, :variety, :user_id)";
 
         $stmt = $conn->prepare($sql);
         $created_at = date('Y-m-d H:i:s');
@@ -63,7 +63,6 @@ switch ($method) {
         $stmt->bindParam(':crops_name', $crops->crops_name);
 
         $stmt->bindParam(':planting_method', $crops->planting_method);
-        $stmt->bindParam(':expected_yield', $crops->expected_yield);
 
         $stmt->bindParam(':harvesting_cal', $crops->harvesting_cal);
         $stmt->bindParam(':pest', $crops->pest);
@@ -93,7 +92,7 @@ switch ($method) {
         $crops = json_decode(file_get_contents('php://input'));
 
         $sql = "UPDATE crops SET crops_img = :crops_img, crops_name = :crops_name, planting_method = :planting_method, 
-        expected_yield = :expected_yield, harvesting_cal = :harvesting_cal, pest = :pest, obnotes = :obnotes, 
+        harvesting_cal = :harvesting_cal, pest = :pest, obnotes = :obnotes, 
         created_at = :created_at, variety = :variety, user_id = :user_id WHERE crops_id = :crops_id AND user_id = :user_id";
 
         $stmt = $conn->prepare($sql);
@@ -101,7 +100,6 @@ switch ($method) {
         $stmt->bindParam(':crops_img', $crops->crops_img);
         $stmt->bindParam(':crops_name', $crops->crops_name);
         $stmt->bindParam(':planting_method', $crops->planting_method);
-        $stmt->bindParam(':expected_yield', $crops->expected_yield);
         $stmt->bindParam(':harvesting_cal', $crops->harvesting_cal);
         $stmt->bindParam(':pest', $crops->pest);
         $stmt->bindParam(':obnotes', $crops->obnotes);
