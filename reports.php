@@ -11,13 +11,22 @@ switch ($method) {
     case "GET":
 
 
+        // if (isset($_GET['field_id'])) {
+        //     $user_id = $_GET['user_id'];
+        //     $field_id = $_GET['field_id'];
+        //     $sql = "SELECT crops.harvesting_cal, crops.crops_name, field.field_size, field.field_name, crops.obnotes FROM schedule 
+        //     INNER JOIN field ON field.field_id = schedule.field_id 
+        //     INNER JOIN crops ON crops.crops_id = schedule.crops_id WHERE schedule.field_id = :field_id AND schedule.user_id = :user_id";
+        // }
+
         if (isset($_GET['field_id'])) {
             $user_id = $_GET['user_id'];
             $field_id = $_GET['field_id'];
-            $sql = "SELECT crops.harvesting_cal, crops.crops_name, field.field_size, field.field_name, crops.obnotes FROM schedule 
+            $sql = "SELECT schedule.activity, crops.harvesting_cal, schedule.actual_start_date, schedule.actual_end_date, crops.crops_name, field.field_size, field.field_name, crops.obnotes FROM schedule 
             INNER JOIN field ON field.field_id = schedule.field_id 
             INNER JOIN crops ON crops.crops_id = schedule.crops_id WHERE schedule.field_id = :field_id AND schedule.user_id = :user_id";
         }
+
 
 
         if (isset($_GET['user_id_field']) && isset($_GET['field_id_field'])) {
