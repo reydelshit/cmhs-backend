@@ -13,7 +13,11 @@ switch ($method) {
 
         if (isset($_GET['user_id'])) {
             $user_id = $_GET['user_id'];
-            $sql = "SELECT * FROM schedule WHERE user_id = :user_id";
+            $sql = "SELECT schedule.*, crops.crops_name, field.field_name
+            FROM schedule 
+            RIGHT JOIN crops ON crops.crops_id = schedule.crops_id 
+            RIGHT JOIN field ON field.field_id = schedule.field_id
+            WHERE schedule.user_id = :user_id";
         }
 
         if (isset($_GET['field_id'])) {
