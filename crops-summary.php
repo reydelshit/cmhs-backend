@@ -16,6 +16,7 @@ switch ($method) {
               COALESCE(suitable.suitable_id, 'N/A') AS suitable_id,
             COALESCE(crops.crops_id, 'N/A') AS crops_id,
             COALESCE(schedule.status, 'N/A') AS status,
+            COALESCE(schedule.activity, 'N/A') AS activity,
             COALESCE(suitable.suitable_month, 'N/A') AS suitable_month,
             COALESCE(crops.crops_name, 'N/A') AS crops_name,
             COALESCE(field.field_id, 'N/A') AS field_id,
